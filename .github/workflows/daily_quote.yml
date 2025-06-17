@@ -40,8 +40,7 @@ jobs:
             exit 1
           fi
 
-          mkdir -p daily_quote
-          echo "$GOOGLE_SERVICE_ACCOUNT" > daily_quote/google_service_account.json
+          echo "$GOOGLE_SERVICE_ACCOUNT" > google_service_account.json
 
           echo "✅ 환경변수 설정 완료"
 
