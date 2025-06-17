@@ -42,8 +42,8 @@ if __name__ == '__main__':
     tags = ["명언", "한줄노트", "AI명언", "세대별명언", "동기부여", "힐링"]
 
     # 동영상 파일 경로 (명언 영상 워크플로우의 최종 파일)
-    video_path = os.path.join(
-        "..", "..", "daily_quote", "quote_video", "00combine", "merged_quotes_bgm.mp4"
+   video_path = os.path.join(
+    "quote_video", "00combine", "merged_quotes_bgm.mp4"
     )
 
     if not os.path.exists(video_path):
