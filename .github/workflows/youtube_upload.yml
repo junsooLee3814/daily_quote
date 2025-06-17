@@ -18,23 +18,23 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r daily_quote/youtube_uploader/requirements_youtube.txt
+        run: pip install -r youtube_uploader/requirements_youtube.txt
 
       - name: Restore client_secrets.json
         run: |
-          mkdir -p daily_quote/youtube_uploader
-          echo "${{ secrets.YOUTUBE_CLIENT_SECRETS }}" > daily_quote/youtube_uploader/client_secrets.json
+          mkdir -p youtube_uploader
+          echo "${{ secrets.YOUTUBE_CLIENT_SECRETS }}" > youtube_uploader/client_secrets.json
 
       - name: Restore token.json
         run: |
-          mkdir -p daily_quote/youtube_uploader
-          printf "%s" '${{ secrets.YOUTUBE_TOKEN_JSON }}' > daily_quote/youtube_uploader/token.json
+          mkdir -p youtube_uploader
+          printf "%s" '${{ secrets.YOUTUBE_TOKEN_JSON }}' > youtube_uploader/token.json
 
       - name: Check token.json content
-        run: cat daily_quote/youtube_uploader/token.json
+        run: cat youtube_uploader/token.json
 
       - name: Upload to YouTube
         env:
           UPLOAD_VIDEO_PATH: quote_video/00combine/merged_quotes_bgm.mp4
         run: |
-          python daily_quote/youtube_uploader/upload_to_youtube.py
+          python youtube_uploader/upload_to_youtube.py
