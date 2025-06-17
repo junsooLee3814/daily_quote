@@ -23,8 +23,9 @@ jobs:
 
       - name: 📦 Python 패키지 설치
         run: |
-          pip install -r daily_quote/requirements.txt
-
+          - name: 📦 Python 패키지 설치
+          pip install -r requirements.txt
+          
       - name: 🔐 환경변수 설정
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
