@@ -1,0 +1,61 @@
+name: daily_quote
+on:
+  schedule:
+    - cron: '50 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate_groval_news_video:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python 환경 설정
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 🎬 FFmpeg 설치 (동영상 제작용)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: 📦 Python 패키지 설치
+        run: |
+          pip install -r requirements.txt
+
+      - name: 🔐 환경변수 설정
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "❌ OPENAI_API_KEY가 설정되지 않았습니다!"
+            exit 1
+          fi
+          echo "OPENAI_API_KEY=$OPENAI_API_KEY" >> .env
+
+          if [ -z "$GOOGLE_SERVICE_ACCOUNT" ]; then
+            echo "❌ GOOGLE_SERVICE_ACCOUNT가 설정되지 않았습니다!"
+            exit 1
+          fi
+          echo "$GOOGLE_SERVICE_ACCOUNT" > google_service_account.json
+
+          echo "✅ 환경변수 설정 완료"
+
+      - name: 🎯 글로벌 뉴스 동영상 생성 실행
+        run: |
+          python gloval_news_video_make.py
+
+      - name: 📤 생성된 파일 커밋 및 푸시
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add news_video/merged_news_bgm.mp4
+          if git diff --staged --quiet; then
+            echo "변경사항이 없습니다."
+          else
+            git commit -m "🎬 자동 생성: $(date '+%Y-%m-%d %H:%M') 글로벌 뉴스 동영상"
+            git push
+          fi
