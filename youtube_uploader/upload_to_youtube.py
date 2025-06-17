@@ -37,13 +37,13 @@ if __name__ == '__main__':
     today = datetime.now().strftime('%Y%m%d')
 
     # 제목, 설명, 태그 자동 생성 (명언/노트용)
-    title = f"[오늘의 한줄노트] {today} 세대별 명언/노트 카드영상"
-    description = "오늘의 세대별 명언/노트 카드 영상을 만나보세요. AI가 자동으로 요약/제작합니다."
+    title = f"{today} [오늘의 한줄노트],세대별 명언/노트 카드영상. 이 포스팅은 쿠팡파트너스 활동으로 일정보수를 지급받습니다."
+    description = "오늘의 세대별 명언/노트로 하루를 시작/정리하세요. 이 포스팅은 쿠팡파트너스 활동으로 일정보수를 지급받습니다."
     tags = ["명언", "한줄노트", "AI명언", "세대별명언", "동기부여", "힐링"]
 
     # 동영상 파일 경로 (명언 영상 워크플로우의 최종 파일)
     video_path = os.path.join(
-        "..", "..", "gloval_news_Qtote", "quote_video", "00combine", "merged_quotes_bgm.mp4"
+        "..", "..", "daily_quote", "quote_video", "00combine", "merged_quotes_bgm.mp4"
     )
 
     if not os.path.exists(video_path):
