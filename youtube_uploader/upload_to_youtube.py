@@ -17,7 +17,7 @@ def upload_video(file_path, title, description, tags):
             'title': title,
             'description': description,
             'tags': tags,
-            'categoryId': '25'  # 뉴스/정치 카테고리
+            'categoryId': '22'  # People & Blogs 카테고리 (명언/노트에 적합)
         },
         'status': {
             'privacyStatus': 'private'
@@ -36,19 +36,18 @@ if __name__ == '__main__':
     # 오늘 날짜 구하기
     today = datetime.now().strftime('%Y%m%d')
 
-    # 제목, 설명, 태그 자동 생성 (글로벌 뉴스용)
-    title = f"[글로벌뉴스] {today} 100초요약_글로벌 뉴스!! 이 포스팅은 쿠팡파트너스 활동으로 일정보수를 받습니다"
-    description = "100초요약_오늘의 글로벌 주요 뉴스 만나보세요. AI가 자동으로 요약/제작합니다.이 포스팅은 쿠팡파트너스 활동으로 일정보수를 받습니다"
-    tags = ["글로벌뉴스", "뉴스요약", "AI뉴스", "세계뉴스", "뉴스", "카드뉴스"]
+    # 제목, 설명, 태그 자동 생성 (명언/노트용)
+    title = f"[오늘의 한줄노트] {today} 세대별 명언/노트 카드영상"
+    description = "오늘의 세대별 명언/노트 카드 영상을 만나보세요. AI가 자동으로 요약/제작합니다."
+    tags = ["명언", "한줄노트", "AI명언", "세대별명언", "동기부여", "힐링"]
 
-    # 동영상 파일 경로 (워크플로우에서 보관한 경로와 일치해야 함)
-    video_dir = "news_video"
-    files = [f for f in os.listdir(video_dir) if f.startswith("merged_news_bgm") and f.endswith(".mp4")]
+    # 동영상 파일 경로 (명언 영상 워크플로우의 최종 파일)
+    video_path = os.path.join(
+        "..", "..", "gloval_news_Qtote", "quote_video", "00combine", "merged_quotes_bgm.mp4"
+    )
 
-    if not files:
-        raise FileNotFoundError("업로드할 동영상 파일이 없습니다.")
-    latest_file = max(files, key=lambda x: os.path.getctime(os.path.join(video_dir, x)))
-    video_path = os.path.join(video_dir, latest_file)
+    if not os.path.exists(video_path):
+        raise FileNotFoundError(f"업로드할 동영상 파일이 없습니다: {video_path}")
 
     upload_video(
         video_path,
