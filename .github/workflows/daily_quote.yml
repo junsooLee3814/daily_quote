@@ -47,13 +47,13 @@ jobs:
 
       - name: 🎯 명언(노트) 동영상 생성 실행
         run: |
-          python daily_quote/gloval_quote_video_make.py
+          python gloval_quote_video_make.py
 
       - name: 📤 생성된 파일 커밋 및 푸시
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add daily_quote/quote_video/00combine/merged_quotes_bgm.mp4
+          git add quote_video/00combine/merged_quotes_bgm.mp4
           if git diff --staged --quiet; then
             echo "변경사항이 없습니다."
           else
