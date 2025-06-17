@@ -1,0 +1,7 @@
+openai
+python-dotenv
+gspread
+oauth2client
+pandas
+pillow
+ffmpeg-python 
