@@ -25,29 +25,31 @@ jobs:
         run: pip install -r requirements.txt
           
       - name: 🔐 환경변수 설정
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
-        run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "❌ OPENAI_API_KEY가 설정되지 않았습니다!"
-            exit 1
-          fi
-          echo "OPENAI_API_KEY=$OPENAI_API_KEY" >> .env
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+      run: |
+        if [ -z "$OPENAI_API_KEY" ]; then
+          echo "❌ OPENAI_API_KEY가 설정되지 않았습니다!"
+          exit 1
+        fi
+        echo "OPENAI_API_KEY=$OPENAI_API_KEY" >> .env
 
-          if [ -z "$GOOGLE_SERVICE_ACCOUNT" ]; then
-            echo "❌ GOOGLE_SERVICE_ACCOUNT가 설정되지 않았습니다!"
-            exit 1
-          fi
-          echo "$GOOGLE_SERVICE_ACCOUNT" > daily_quote/google_service_account.json
+        if [ -z "$GOOGLE_SERVICE_ACCOUNT" ]; then
+          echo "❌ GOOGLE_SERVICE_ACCOUNT가 설정되지 않았습니다!"
+          exit 1
+        fi
+        
+        mkdir -p daily_quote
+        echo "$GOOGLE_SERVICE_ACCOUNT" > daily_quote/google_service_account.json
 
-          echo "✅ 환경변수 설정 완료"
-
-      - name: 🎯 명언(노트) 동영상 생성 실행
+        echo "✅ 환경변수 설정 완료"
+      
+        - name: 🎯 명언(노트) 동영상 생성 실행
         run: |
           python daily_quote/gloval_quote_video_make.py
 
-      - name: 📤 생성된 파일 커밋 및 푸시
+        - name: 📤 생성된 파일 커밋 및 푸시
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
