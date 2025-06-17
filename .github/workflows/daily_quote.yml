@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate_groval_news_video:
+  generate_quote_video:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 코드 체크아웃
@@ -23,7 +23,7 @@ jobs:
 
       - name: 📦 Python 패키지 설치
         run: |
-          pip install -r requirements.txt
+          pip install -r gloval_news_Qtote/requirements.txt
 
       - name: 🔐 환경변수 설정
         env:
@@ -40,22 +40,22 @@ jobs:
             echo "❌ GOOGLE_SERVICE_ACCOUNT가 설정되지 않았습니다!"
             exit 1
           fi
-          echo "$GOOGLE_SERVICE_ACCOUNT" > google_service_account.json
+          echo "$GOOGLE_SERVICE_ACCOUNT" > gloval_news_Qtote/google_service_account.json
 
           echo "✅ 환경변수 설정 완료"
 
-      - name: 🎯 글로벌 뉴스 동영상 생성 실행
+      - name: 🎯 명언(노트) 동영상 생성 실행
         run: |
-          python gloval_news_video_make.py
+          python gloval_news_Qtote/gloval_quote_video_make.py
 
       - name: 📤 생성된 파일 커밋 및 푸시
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add news_video/merged_news_bgm.mp4
+          git add gloval_news_Qtote/quote_video/00combine/merged_quotes_bgm.mp4
           if git diff --staged --quiet; then
             echo "변경사항이 없습니다."
           else
-            git commit -m "🎬 자동 생성: $(date '+%Y-%m-%d %H:%M') 글로벌 뉴스 동영상"
+            git commit -m "🎬 자동 생성: $(date '+%Y-%m-%d %H:%M') 명언(노트) 동영상"
             git push
           fi
