@@ -1,9 +1,10 @@
 name: daily_quote
+
 on:
   schedule:
-    - cron: '15 3 * * *' # 매일 오후 12시 15분 KST (UTC+9 → UTC 03:15)
+    - cron: '5 3 * * *' # 매일 12:05 KST (UTC+9 → UTC 03:05)
   workflow_dispatch:
-
+  
 jobs:
   generate_quote_video:
     runs-on: ubuntu-latest
